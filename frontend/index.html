@@ -1,0 +1,62 @@
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+
+		<form>
+		</form>
+
+		<label>input text label</label>
+		<input id="text_input_1" type="text" name="" value="" >
+		<br><br>
+
+		<input id="checkbox" type="checkbox" name="" value="" style="width:15px;height:15px">
+		<label>check box label</label>
+		<br><br>
+
+
+		<input id="file" type="file" name="">
+		<br><br>
+
+		<button onclick="send()">send</button>
+		<br><br>
+
+
+		<script>
+
+
+file_input = document.getElementById("file")
+
+file_input.addEventListener("change", function(){
+	formData = new FormData();
+	formData.append("file", file_input.files[0])
+})
+
+function populateFormDataObj(){
+	text1 = document.getElementById("text_input_1");
+	checkbox = document.getElementById("checkbox");
+
+	formData.append("text1",text1.value);
+	formData.append("checkbox",checkbox.checked);
+
+
+}
+
+function send(){
+	populateFormDataObj()
+
+	fetch("http://localhost:5000",{
+		method:"POST",
+		body:formData},
+		).then(function(response){
+		return	response.json()
+	}).then(function(data){
+			console.log(data)
+		})
+}
+		</script>
+
+	</body>
+</html>
